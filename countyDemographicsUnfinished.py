@@ -7,7 +7,7 @@ def main():
     print(county_most_under_18(counties))
     print(percent_most_under_18(counties))
     print(most_under_18(counties))
-    #print(state_with_most_counties(counties))
+    print(state_with_most_counties(counties))
 
 def alphabetically_first_county(counties):
     """Return the county with the name that comes first alphabetically."""
@@ -52,7 +52,23 @@ def state_with_most_counties(counties):
     #Find the state in the dictionary with the most counties
     
     #Return the state with the most counties
+    states = {}
     
+    for c in counties:
+        if c["State"] not in states:
+            states[c["State"]] = []
+            states[c["State"]].append(c["County"])
+        else:
+            states[c["State"]].append(c["County"])
+    
+    numCounties = 0
+    mostCounties = ""
+    for s in states:
+        if len(states[s]) > numCounties:
+            numCounties = len(s)
+            mostCounties = s
+    
+    return mostCounties
     
 def your_interesting_demographic_function(counties):
     """Compute and return an interesting fact using the demographic data about the counties in the US."""
