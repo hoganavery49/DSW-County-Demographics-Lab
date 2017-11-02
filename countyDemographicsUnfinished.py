@@ -8,6 +8,7 @@ def main():
     print(percent_most_under_18(counties))
     print(most_under_18(counties))
     print(state_with_most_counties(counties))
+    print(state_with_most_sales_per_capita(counties))
 
 def alphabetically_first_county(counties):
     """Return the county with the name that comes first alphabetically."""
@@ -55,23 +56,31 @@ def state_with_most_counties(counties):
     states = {}
     
     for c in counties:
-        if c["State"] not in states:
-            states[c["State"]] = []
+        if c["State"] in states:
             states[c["State"]].append(c["County"])
         else:
+            states[c["State"]] = []
             states[c["State"]].append(c["County"])
     
     numCounties = 0
     mostCounties = ""
     for s in states:
         if len(states[s]) > numCounties:
-            numCounties = len(s)
+            numCounties = len(states[s])
             mostCounties = s
     
     return mostCounties
     
-def your_interesting_demographic_function(counties):
+def state_with_most_sales_per_capita(counties):
     """Compute and return an interesting fact using the demographic data about the counties in the US."""
+    mostSales = 0;
+    state = ""
+    for c in counties:
+        if c["Sales"]["Retail Sales per Capita"] > mostSales:
+            mostSales = c["Sales"]["Retail Sales per Capita"]
+            state = c["State"]
+            
+    return [state, mostSales]
 
 if __name__ == '__main__':
     main()
